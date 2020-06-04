@@ -1,50 +1,79 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+
+using namespace std;
+
+// 窗口大小调整时的回调
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+
+// 输入
+void processInput(GLFWwindow *window)
+{
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+
+
 int main()
 {
-    // glfw: initialize and configure
-    // ------------------------------
+
+    // 实例化GLFW窗口
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //uncomment this statement to fix compilation on OS X
-#endif
-    // glfw window creation
-    // --------------------
-    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    // 创建一个窗口
+    GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        cout << "Failed to create GLFW window" << endl;
         glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window);
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
+
+    // 调用任何OpenGL函数之前初始化GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        cout << "Failed to initialize GLAD" << endl;
         return -1;
     }
-    // render loop
-    // -----------
+
+    // 视口 （注意和窗口的区别）
+    glViewport(0, 0, 800, 600);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(0.0f, 1.f, 0.0f, 1.0f);
+        // 输入
+        processInput(window);
+
+
+        // 渲染指令
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        // glfw: swap buffers and poll IO events (keyspressed/released, mouse moved etc.)
-        // ---------------------------------------------------
+
+        // 交换颜色缓冲
         glfwSwapBuffers(window);
+        // 检查触发事件
         glfwPollEvents();
     }
-    // glfw: terminate, clearing all previously allocated GLFWresources.
-    //---------------------------------------------------------------
+    
+
+    // 释放资源
     glfwTerminate();
+
+
     return 0;
 }
+
