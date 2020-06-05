@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-06-05 09:30:56
- * @LastEditTime: 2020-06-05 10:05:02
+ * @LastEditTime: 2020-06-05 10:26:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \LearnOpenGL_VSCode\src\main.cpp
@@ -81,8 +81,6 @@ int main()
     // 释放资源
     glfwTerminate();
 
-
-    // 测试分支
 
     return 0;
 }
