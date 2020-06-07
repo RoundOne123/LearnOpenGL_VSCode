@@ -6,7 +6,7 @@ INCLUDE         := ./include
 LIB		:= ./lib
 LIBRARIES	:= -lglad -lglfw3dll
 
-SRC = $(wildcard src/*.cpp src/Chapter1-Hello-Window/*.cpp)
+SRC = $(wildcard src/*.cpp src/Chapter1-Hello-Window/*.cpp src/Chapter2-Hello-Triangle/*.cpp)
 EXECUTABLE := main
 
 $(EXECUTABLE): $(SRC)

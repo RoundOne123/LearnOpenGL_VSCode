@@ -6,14 +6,14 @@
 using namespace std;
 
 // 窗口大小调整时的回调
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+void framebuffer_size_callback_1_window(GLFWwindow *window, int width, int height);
+void framebuffer_size_callback_1_window(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
 
 // 输入
-void processInput(GLFWwindow *window)
+void processInput_1_window(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -47,13 +47,13 @@ int HelloWindowMain()
 
     // 视口 （注意和窗口的区别）
     glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback_1_window);
 
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
         // 输入
-        processInput(window);
+        processInput_1_window(window);
 
         // 渲染指令
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
