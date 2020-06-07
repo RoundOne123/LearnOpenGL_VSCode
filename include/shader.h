@@ -138,6 +138,7 @@ public:
     {
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
     }
+
 };
 
 #endif

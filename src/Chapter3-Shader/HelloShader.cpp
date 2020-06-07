@@ -113,7 +113,7 @@ int HelloShaderMain()
     // 释放分配的资源
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    //glDeleteProgram(shaderProgram);
+    glDeleteProgram(ourShader.ID);
 
     // 释放所有GLFW资源
     glfwTerminate();

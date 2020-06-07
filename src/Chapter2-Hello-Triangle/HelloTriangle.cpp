@@ -13,36 +13,6 @@ static void processInput_2_triangle(GLFWwindow *window);
 static unsigned int SCR_WIDTH = 800;
 static unsigned int SCR_HEIGHT = 600;
 
-// 顶点数据
-static float vertices[] = {
-    0.5f, 0.5f, 0.0f,   // 右上角
-    0.5f, -0.5f, 0.0f,  // 右下角
-    -0.5f, -0.5f, 0.0f, // 左下角
-    -0.5f, 0.5f, 0.0f   // 左上角
-};
-
-static unsigned int indices[] = { // 注意索引从0开始! 
-    0, 1, 3, // 第一个三角形
-    1, 2, 3  // 第二个三角形
-};
-
-// 定义着色器
-const char *vertexShaderSource =
-    "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-
-const char *fragmentShaderSource =
-    "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0"; // ??
-
 int HelloTriangleMain()
 {
     // 实例化GLFW窗口
@@ -74,6 +44,20 @@ int HelloTriangleMain()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback_2_triangle);
 
 #pragma region 顶点数据相关
+
+// 顶点数据
+static float vertices[] = {
+    0.5f, 0.5f, 0.0f,   // 右上角
+    0.5f, -0.5f, 0.0f,  // 右下角
+    -0.5f, -0.5f, 0.0f, // 左下角
+    -0.5f, 0.5f, 0.0f   // 左上角
+};
+
+static unsigned int indices[] = { // 注意索引从0开始! 
+    0, 1, 3, // 第一个三角形
+    1, 2, 3  // 第二个三角形
+};
+
     // 顶点缓冲对象
     unsigned int VBO;
     glGenBuffers(1, &VBO);
@@ -112,6 +96,24 @@ int HelloTriangleMain()
 #pragma endregion
 
 #pragma region 着色器相关
+
+// 定义着色器
+const char *vertexShaderSource =
+    "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+
+const char *fragmentShaderSource =
+    "#version 330 core\n"
+    "out vec4 FragColor;\n"
+    "void main()\n"
+    "{\n"
+    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "}\n\0"; // ??
+
     // 编译顶点着色器
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
