@@ -6,22 +6,22 @@
 using namespace std;
 
 // 函数声明
-void framebuffer_size_callback_2_triangle(GLFWwindow *window, int width, int height);
-void processInput_2_triangle(GLFWwindow *window);
+static void framebuffer_size_callback_2_triangle(GLFWwindow *window, int width, int height);
+static void processInput_2_triangle(GLFWwindow *window);
 
 // 设置
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+static unsigned int SCR_WIDTH = 800;
+static unsigned int SCR_HEIGHT = 600;
 
 // 顶点数据
-float vertices[] = {
+static float vertices[] = {
     0.5f, 0.5f, 0.0f,   // 右上角
     0.5f, -0.5f, 0.0f,  // 右下角
     -0.5f, -0.5f, 0.0f, // 左下角
     -0.5f, 0.5f, 0.0f   // 左上角
 };
 
-unsigned int indices[] = { // 注意索引从0开始! 
+static unsigned int indices[] = { // 注意索引从0开始! 
     0, 1, 3, // 第一个三角形
     1, 2, 3  // 第二个三角形
 };
