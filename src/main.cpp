@@ -2,6 +2,7 @@
 #include "Chapter2/HelloTriangle.h"
 #include "Chapter3/HelloShader.h"
 #include "Chapter4/HelloTexture.h"
+#include "Chapter5/HelloTransform.h"
 
 int main()
 {
@@ -12,7 +13,9 @@ int main()
 
     //return HelloShaderMain();
 
-    return HelloTextureMain();
+    //return HelloTextureMain();
+
+    return HelloTransformMain();
 
     //return 0;
 }

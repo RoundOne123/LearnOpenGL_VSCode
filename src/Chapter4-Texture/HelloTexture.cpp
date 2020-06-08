@@ -176,7 +176,7 @@ int HelloTextureMain()
         // 测试得出结论 如果纹理一直不变的话 上面绑定后 这里可以不绑定
         //glBindTexture(GL_TEXTURE_2D, texture1);
 
-        // 激活纹理单元 绑定纹理 这里回直接把纹理赋值给指定纹理单元的采样器
+        // 激活纹理单元 绑定纹理 这里会直接把纹理赋值给指定纹理单元的采样器
         // 纹理单元和采样器的对应关系在上面ourShader.setInt已经设置
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
