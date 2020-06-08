@@ -92,11 +92,11 @@ int HelloTextureMain()
 #pragma region // 处理纹理相关
 
     // 创建纹理对象
-    unsigned int texture;
-    glGenTextures(1, &texture);
+    unsigned int texture1, texture2;
+    glGenTextures(1, &texture1);
 
     // 绑定纹理
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
 
     // 为当前绑定的纹理对象设置环绕、过滤方式
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -106,6 +106,8 @@ int HelloTextureMain()
 
     // 加载纹理数据
     int width, height, nrChannels;
+    // 反转纹理的y轴
+    stbi_set_flip_vertically_on_load(true);
     unsigned char *data = stbi_load("./textures/Chapter4-Textures/container.jpg", &width, &height, &nrChannels, 0); // 第四个参数没说是什么
     if (data)
     {
@@ -116,11 +118,39 @@ int HelloTextureMain()
     }
     else
     {
-        cout << "Failed to load texture" << endl;
+        cout << "Failed to load texture1" << endl;
     }
 
     // 释放纹理数据内存
     stbi_image_free(data);
+
+    // 第二张纹理
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    data = stbi_load("./textures/Chapter4-Textures/awesomeface.png", &width, &height, &nrChannels, 0);
+
+    if(data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }else
+    {
+        cout << "Failed to load texture2" << endl;
+    }
+
+    stbi_image_free(data);
+
+    // 设置Uniform 前先激活shaderProgram
+    ourShader.use();
+    // 定义那个uniform对应哪个纹理单元
+    ourShader.setInt("textrue1", 0);
+    ourShader.setInt("texture2", 1);
 
 #pragma endregion
 
@@ -144,7 +174,14 @@ int HelloTextureMain()
         // 会自动把纹理赋值给片段着色器的采样器：
         // 但是 上面已经绑定了 这里为什么还要绑定？
         // 测试得出结论 如果纹理一直不变的话 上面绑定后 这里可以不绑定
-        glBindTexture(GL_TEXTURE_2D, texture);
+        //glBindTexture(GL_TEXTURE_2D, texture1);
+
+        // 激活纹理单元 绑定纹理 这里回直接把纹理赋值给指定纹理单元的采样器
+        // 纹理单元和采样器的对应关系在上面ourShader.setInt已经设置
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
 
         // 开始绘制
         glBindVertexArray(VAO);
