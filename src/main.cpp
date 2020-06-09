@@ -4,6 +4,7 @@
 #include "Chapter4/HelloTexture.h"
 #include "Chapter5/HelloTransform.h"
 #include "Chapter6/HelloCoordinateSystem.h"
+#include "Chapter7/HelloCamera.h"
 
 int main()
 {
@@ -18,7 +19,9 @@ int main()
 
     //return HelloTransformMain();
 
-    return HelloCoordinateSystemMain();
+    //return HelloCoordinateSystemMain();
+
+    return HelloCameraMain();
 
     //return 0;
 }
