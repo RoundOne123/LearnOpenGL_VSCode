@@ -3,6 +3,7 @@
 #include "Chapter3/HelloShader.h"
 #include "Chapter4/HelloTexture.h"
 #include "Chapter5/HelloTransform.h"
+#include "Chapter6/HelloCoordinateSystem.h"
 
 int main()
 {
@@ -15,7 +16,9 @@ int main()
 
     //return HelloTextureMain();
 
-    return HelloTransformMain();
+    //return HelloTransformMain();
+
+    return HelloCoordinateSystemMain();
 
     //return 0;
 }
