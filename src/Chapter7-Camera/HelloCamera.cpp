@@ -1,4 +1,5 @@
 #include "Chapter7/HelloCamera.h"
+#include "camera.h"
 #include "shader.h"
 #include "stb_image.h"
 #include <glad/glad.h>
@@ -16,6 +17,10 @@
         鼠标滚轮xoffset是啥？yoffset是怎么变化的？怎么影响的fov？
         怎么实现四元数摄像机？
         怎么实现本节中用到的摄像机类？
+
+        为什么Camera的构造方法一定要传个参数？
+        YAW的默认值为什么是-90°方向是怎么计算的？
+        再看一下camera.h使用后的变化，主要理解view、projection矩阵怎么就这样算了？
 */
 
 // 设置
@@ -43,6 +48,9 @@ static float lastX = 400, lastY = 300; // 初始值为屏幕中心
 static float yaw, pitch;               // 摄像机视角
 static bool firstMouse = true;         // 处理 刚进入窗口时的闪动
 static float fov = 45;                 // 摄像机视角 filed of view
+
+// 使用摄像机类
+static Camera camera(cameraPos);
 
 int HelloCameraMain()
 {
@@ -272,12 +280,13 @@ int HelloCameraMain()
 
         // =>> 自由移动
         glm::mat4 view = glm::mat4(1.0f);
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        //view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        view = camera.GetViewMatrix();
 
         // 投影矩阵 -> 透视投影
         glm::mat4 projection; // = glm::mat4(1.0f);   // 这里可初始化 可不初始化
         // -> 45 -> fov 支持视角缩放
-        projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
         // 设置Uniform
         ourShader.use();
@@ -327,21 +336,25 @@ void processInput(GLFWwindow *window)
     float cameraSpeed = 2.5f * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-        cameraPos += cameraSpeed * cameraFront;
+        //cameraPos += cameraSpeed * cameraFront;
+        camera.ProcessKeyboard(FORWARD, deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-        cameraPos -= cameraSpeed * cameraFront;
+        //cameraPos -= cameraSpeed * cameraFront;
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
         // 讲道理 这里应该使用 glm::cross(cameraUp, -cameraFront) 求 右轴
         // 这里 直接这样结果也是对的但是 不好理解
-        cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        //cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        camera.ProcessKeyboard(LEFT, deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-        cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        //cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+        camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 }
 
@@ -360,33 +373,36 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    float sensitivity = 0.05f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+    // float sensitivity = 0.05f;
+    // xoffset *= sensitivity;
+    // yoffset *= sensitivity;
 
-    // 这里为什么是 += yaw、pitch是什么一直存在的值 还是 一次鼠标移动产生的值 ？？？
-    yaw += xoffset;
-    pitch += yoffset;
+    // // 这里为什么是 += yaw、pitch是什么一直存在的值 还是 一次鼠标移动产生的值 ？？？
+    // yaw += xoffset;
+    // pitch += yoffset;
 
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
+    // if (pitch > 89.0f)
+    //     pitch = 89.0f;
+    // if (pitch < -89.0f)
+    //     pitch = -89.0f;
 
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
+    // glm::vec3 front;
+    // front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    // front.y = sin(glm::radians(pitch));
+    // front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    // cameraFront = glm::normalize(front);
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // 监听鼠标滚轮变化
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-    if (fov >= 1.0f && fov <= 45.0f)
-        fov -= yoffset; // 滚轮x 是哪个方向？
-    if (fov <= 1.0f)
-        fov = 1.0f;
-    if (fov >= 45.0f)
-        fov = 45.0f;
+    // if (fov >= 1.0f && fov <= 45.0f)
+    //     fov -= yoffset; // 滚轮x 是哪个方向？
+    // if (fov <= 1.0f)
+    //     fov = 1.0f;
+    // if (fov >= 45.0f)
+    //     fov = 45.0f;
+    camera.ProcessMouseScroll(yoffset);
 }
