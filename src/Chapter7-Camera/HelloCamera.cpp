@@ -16,10 +16,29 @@
         为什么我的工程进去视角不对，很歪？
         鼠标滚轮xoffset是啥？yoffset是怎么变化的？怎么影响的fov？
         怎么实现四元数摄像机？
-        怎么实现本节中用到的摄像机类？
 
         为什么Camera的构造方法一定要传个参数？
+            注意下面的调用的区别
+            Camera camera; // 在栈里创建对象，操作系统进行内存的分配和管理。调用用 .
+            Camera camera(cameraPos);  // 在栈里创建对象，操作系统进行内存的分配和管理
+            Camera *camera = new Camera(); // 堆中分配，由管理者进行内存的分配和管理，用完必须delete()，否则可能造成内存泄漏。调用要用->
+            Camera camera();   // 声明返回值为Camera类型的无参函数，函数名叫camera
+
+        Camera的构造函数的冒号是什么意思？
+            这里应该不一定非要用冒号，构造函数加冒号的用法参考下面的链接
+            参考：https://blog.csdn.net/kaixinbingju/article/details/9094289
+
         YAW的默认值为什么是-90°方向是怎么计算的？
+            首先我们用于计算的公式是，cameraFront的公式为：
+                front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+                front.y = sin(glm::radians(Pitch));
+                front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+            如果忽略Pitch的影响，我们不难推测Yaw为x轴正方向顺时针转动方向的夹角，
+            因为我们不仅要保证front分量的值符合三角函数，还要保证分量的方向也符合三角函数。
+            （当然我们可以用更复杂的计算方式（手动处理正负），然后用不指向x正方向的Yaw，可为什么要给自己找麻烦呢？(●'◡'●)）
+            所以，Yaw为0的时候其实是与x轴正方向重合。
+            又因为我们的Cube相对摄像机在z轴的负方向，所以我们的Yaw要设置为-90°，以正对cube。
+
         再看一下camera.h使用后的变化，主要理解view、projection矩阵怎么就这样算了？
 */
 
@@ -50,7 +69,7 @@ static bool firstMouse = true;         // 处理 刚进入窗口时的闪动
 static float fov = 45;                 // 摄像机视角 filed of view
 
 // 使用摄像机类
-static Camera camera(cameraPos);
+static Camera camera(cameraPos); // 在栈里创建对象
 
 int HelloCameraMain()
 {
