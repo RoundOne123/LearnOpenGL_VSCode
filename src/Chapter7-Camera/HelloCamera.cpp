@@ -50,9 +50,9 @@ static unsigned int SCR_HEIGHT = 600;
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 static void processInput(GLFWwindow *window);
 // 监听光标位置变化
-void mouse_callback(GLFWwindow *window, double xpos, double ypos);
+static void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 // 监听鼠标滚轮变化
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+static void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
 // 摄像机相关
 static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);

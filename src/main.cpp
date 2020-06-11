@@ -5,6 +5,7 @@
 #include "Chapter5/HelloTransform.h"
 #include "Chapter6/HelloCoordinateSystem.h"
 #include "Chapter7/HelloCamera.h"
+#include "Chapter8/Colors.h"
 
 int main()
 {
@@ -21,7 +22,9 @@ int main()
 
     //return HelloCoordinateSystemMain();
 
-    return HelloCameraMain();
+    //return HelloCameraMain();
+
+    return ColorsMain();
 
     //return 0;
 }
