@@ -8,6 +8,7 @@
 #include "Chapter8/Colors.h"
 #include "Chapter9/BasicLighting.h"
 #include "Chapter10/Materials.h"
+#include "Chapter11/LightingMaps.h"
 
 int main()
 {
@@ -30,7 +31,9 @@ int main()
 
     //return BasicLightingMain();
 
-    return MaterialsMain();
+    //return MaterialsMain();
+
+    return LightingMapsMain();
 
     //return 0;
 }
