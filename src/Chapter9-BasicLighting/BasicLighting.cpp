@@ -197,6 +197,9 @@ int BasicLightingMain()
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
+        // 让光源动起来
+        lightPos = glm::vec3((float)sin(glfwGetTime()) * 2.5f, 1.0f, (float)cos(glfwGetTime()) * 2.5f);
+
         // 绘制object ----------------------------------------------------
         //设置shader uniform
         objectShader.use();
