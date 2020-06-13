@@ -7,6 +7,7 @@
 #include "Chapter7/HelloCamera.h"
 #include "Chapter8/Colors.h"
 #include "Chapter9/BasicLighting.h"
+#include "Chapter10/Materials.h"
 
 int main()
 {
@@ -27,7 +28,9 @@ int main()
 
     //return ColorsMain();
 
-    return BasicLightingMain();
+    //return BasicLightingMain();
+
+    return MaterialsMain();
 
     //return 0;
 }

@@ -8,7 +8,7 @@ in vec3 FragPos;            // 世界空间的顶点位置
 uniform vec3 lightColor;    // 光照颜色
 uniform vec3 objectColor;   // 物体颜色 -> 物体从一个颜色反射各个分量的大小
 
-uniform vec3 lightPos;      // 世界空间下的灯光位置？？ 怎么赋值的？ 在CPU计算好赋值过来的？
+uniform vec3 lightPos;      // 世界空间下的灯光位置
 uniform vec3 viewPos;     // 世界空间下的摄像机坐标
 
 void main()
