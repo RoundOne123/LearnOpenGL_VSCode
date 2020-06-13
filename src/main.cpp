@@ -6,6 +6,7 @@
 #include "Chapter6/HelloCoordinateSystem.h"
 #include "Chapter7/HelloCamera.h"
 #include "Chapter8/Colors.h"
+#include "Chapter9/BasicLighting.h"
 
 int main()
 {
@@ -24,7 +25,9 @@ int main()
 
     //return HelloCameraMain();
 
-    return ColorsMain();
+    //return ColorsMain();
+
+    return BasicLightingMain();
 
     //return 0;
 }
