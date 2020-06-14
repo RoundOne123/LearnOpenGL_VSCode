@@ -1,6 +1,6 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;  // 原始数据是定义的在模型空间的法线
+layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoord;
 
 uniform mat4 model;
@@ -19,4 +19,4 @@ void main()
     // 法线矩阵 = 模型矩阵左上角的逆矩阵的转置矩阵
     Normal = mat3(transpose(inverse(model))) * aNormal;
     TexCoord = aTexCoord;
-}   
+}

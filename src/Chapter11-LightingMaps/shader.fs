@@ -29,12 +29,10 @@ struct Light {
 
 uniform Material material;  // 包含物体颜色
 uniform Light light;        // 包含光源（强度）颜色
-
 uniform vec3 viewPos;       // 世界空间下的摄像机坐标
 
-in vec3 Normal;             // 世界空间下的法向量
 in vec3 FragPos;            // 世界空间的顶点位置
-
+in vec3 Normal;             // 世界空间下的法向量
 in vec2 TexCoord;           // 顶点的uv坐标
 
 void main()
