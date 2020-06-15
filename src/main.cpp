@@ -10,6 +10,7 @@
 #include "Chapter10/Materials.h"
 #include "Chapter11/LightingMaps.h"
 #include "Chapter12/LightCasters.h"
+#include "Chapter13/MultipleLights.h"
 
 int main()
 {
@@ -36,7 +37,9 @@ int main()
 
     //return LightingMapsMain();
 
-    return LightCastersMain();
+    //return LightCastersMain();
+
+    return MultipleLightsMain();
 
     //return 0;
 }
